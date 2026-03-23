@@ -1,0 +1,5 @@
+2026-03-21 11:00:16,682 - root - INFO - info
+2026-03-21 11:00:16,685 - root - DEBUG - debug
+2026-03-21 11:00:16,693 - root - WARNING - warning
+2026-03-21 11:00:16,698 - root - ERROR - error
+2026-03-21 11:00:16,700 - root - CRITICAL - critical
