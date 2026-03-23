@@ -7,5 +7,6 @@ wheels/
 *.egg-info
 .env
 .python-version
+*.log
 # Virtual environments
 .venv
