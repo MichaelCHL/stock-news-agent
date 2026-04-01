@@ -1,5 +1,5 @@
 from config import NEG_PERCENT_THRESHOLD, POS_PERCENT_THRESHOLD
-def price_move(symbol, symbol_pc, spy_pc):
+def price_move(symbol_pc, spy_pc):
 
     if symbol_pc > spy_pc and symbol_pc > POS_PERCENT_THRESHOLD:
         return "outperform"
