@@ -44,14 +44,3 @@ def search(ticker):
 
 if __name__ == '__main__':
     search('NVDA')
-#     # 1. 取得回應並存檔
-# response = client.messages.create(...)
-# data = response.model_dump()
-
-# with open("my_cache.json", "w", encoding="utf-8") as f:
-#     json.dump(data, f, ensure_ascii=False, indent=2)
-
-# # 2. 下次測試時直接讀取
-# with open("my_cache.json", "r") as f:
-#     saved_data = json.load(f)
-#     print(saved_data['content'][0]['text']) # 取得回覆文字
