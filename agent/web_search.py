@@ -1,24 +1,57 @@
-import os
 import anthropic
-
+from utils.logger import get_logger
+from datetime import datetime
 from dotenv import load_dotenv
 from config import MODEL, MAX_TOKENS
 
 load_dotenv()
+logger =  get_logger(__name__)
 
 def search(ticker):
-    client = anthropic.Anthropic()
+    today_dt = datetime.now().strftime("%Y-%m-%d")
 
-    response = client.messages.create(
-        model=MODEL,
-        max_tokens=MAX_TOKENS,
-        messages=[
-            {
-                "role": "user",
-                "content": f"Search for news related to {ticker} that causes the price change",
-            }
-        ],
-        tools=[{"type": "web_search_20260209", "name": "web_search"}]
-    )
+    try:
+        logger.info("Initiating a client...")
+        client = anthropic.Anthropic()
 
-    return response
+        response = client.messages.create(
+            model=MODEL,
+            max_tokens=MAX_TOKENS,
+            messages=[
+                {
+                    "role": "user",
+                    "content": f"Search for today {today_dt} news related to {ticker} that causes the price change",
+                }
+            ],
+            tools=[{"type": "web_search_20260209", 
+                    "name": "web_search",
+                    "max_uses": 1
+                    }]
+        )
+
+        summary = []
+        for block in response.content:
+            if block.type == 'text':
+                summary.append(block.text)
+        result = ''.join(summary)
+        
+        logger.info("Result retrieved successfully!")
+        return result
+    
+    except anthropic.APIConnectionError as e:
+        logger.error(f"Failed to retreive the latest news related to {ticker} on {today_dt}")
+        print("The server could not be reached - ", e)
+
+if __name__ == '__main__':
+    search('NVDA')
+#     # 1. 取得回應並存檔
+# response = client.messages.create(...)
+# data = response.model_dump()
+
+# with open("my_cache.json", "w", encoding="utf-8") as f:
+#     json.dump(data, f, ensure_ascii=False, indent=2)
+
+# # 2. 下次測試時直接讀取
+# with open("my_cache.json", "r") as f:
+#     saved_data = json.load(f)
+#     print(saved_data['content'][0]['text']) # 取得回覆文字
