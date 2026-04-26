@@ -7,7 +7,7 @@ import anthropic
 
 logger = get_logger(__name__)
 
-def orchestrator(ticker):
+def orchestrator(ticker: str):
     # ticker = input("Please enter a ticker symbol")
     today_price = get_real_time_price(ticker)
     if not today_price:
@@ -19,7 +19,7 @@ def orchestrator(ticker):
     ticker_performance = price_move(ticker_pc, spy_pc)
     if ticker_performance in ["market_wide_drop", "underperform", "underperform_mild", "outperform_mild", "outperform"]:
         try:
-            news = search(ticker)
+            news = search(ticker.upper())
             return news
         except anthropic.APIConnectionError as e:
             print("API Connection Failed!")

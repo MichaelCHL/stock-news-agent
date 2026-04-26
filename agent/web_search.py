@@ -29,6 +29,7 @@ def search(ticker):
                     }]
         )
 
+
         summary = []
         for block in response.content:
             if block.type == 'text':
