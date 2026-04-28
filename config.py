@@ -3,6 +3,9 @@ import sys
 from dotenv import load_dotenv
 load_dotenv()
 
+# FinnHub
+FINNHUB_API_KEY = os.getenv("FINNHUB_API_KEY")
+
 # price_move_sig.py
 POS_PERCENT_THRESHOLD = 2
 NEG_PERCENT_THRESHOLD = -2

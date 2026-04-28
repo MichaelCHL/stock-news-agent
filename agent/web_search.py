@@ -1,10 +1,8 @@
 import anthropic
 from utils.logger import get_logger
 from datetime import datetime
-from dotenv import load_dotenv
-from config import MODEL, MAX_TOKENS
+from config import MODEL, MAX_TOKENS, ANTHROPIC_API_KEY
 
-load_dotenv()
 logger =  get_logger(__name__)
 
 def search(ticker):

@@ -2,13 +2,12 @@ from dotenv import load_dotenv
 from utils.logger import get_logger
 from finnhub.exceptions import FinnhubAPIException
 from typing import Dict, Optional
+from config import FINNHUB_API_KEY
 
 import finnhub
 import os
 
-load_dotenv()
 logger = get_logger(__name__)
-FINNHUB_API_KEY = os.getenv("FINNHUB_API_KEY")
 finnhub_client = finnhub.Client(api_key=FINNHUB_API_KEY)
 
 def get_real_time_price(symbol: str) -> Optional[Dict[str, Dict[str,float]]]:
