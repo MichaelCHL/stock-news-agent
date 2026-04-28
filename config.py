@@ -6,6 +6,9 @@ load_dotenv()
 # FinnHub
 FINNHUB_API_KEY = os.getenv("FINNHUB_API_KEY")
 
+# Cluade
+ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
+
 # price_move_sig.py
 POS_PERCENT_THRESHOLD = 2
 NEG_PERCENT_THRESHOLD = -2

@@ -4,6 +4,7 @@ from linebot.v3.exceptions import InvalidSignatureError
 from linebot.v3.webhooks import MessageEvent, TextMessageContent
 from linebot.v3.webhook import WebhookParser
 from orchestrator import orchestrator
+from price.ticker_search import ticker_search
 from config import LINE_CHANNEL_SECRET, LINE_CHANNEL_ACCESS_TOKEN
 import asyncio
 
@@ -33,11 +34,19 @@ async def handle_callback(request: Request):
         if not isinstance(event.message, TextMessageContent):
             continue
         
-        ticker_symbol = event.message.text
-        if ticker_symbol:
-            result = await asyncio.to_thread(orchestrator, ticker_symbol)
-        else:
-            result = 'Please enter a valid ticker symbol.'
+        user_input = ticker_search(event.message.text)
+        if not user_input:
+            await line_bot_api.reply_message(
+                ReplyMessageRequest(
+                    reply_token=event.reply_token,
+                    messages=[TextMessage(text="Failed to find the ticker. Please try another one.")]
+                )
+            )
+            continue 
+
+        ticker_symbol = user_input.upper()
+        
+        result = await asyncio.to_thread(orchestrator, ticker_symbol)
         await line_bot_api.reply_message(
             ReplyMessageRequest(
                 reply_token=event.reply_token,
