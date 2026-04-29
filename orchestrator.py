@@ -7,9 +7,8 @@ import anthropic
 
 logger = get_logger(__name__)
 
-def orchestrator(ticker: str):
-    # ticker = input("Please enter a ticker symbol")
-    today_price = get_real_time_price(ticker)
+async def orchestrator(ticker: str):
+    today_price = await get_real_time_price(ticker)
     if not today_price:
         logger.error("Failed to fetch data!")
         return
@@ -27,10 +26,9 @@ def orchestrator(ticker: str):
             return
         
     elif ticker_performance == 'market_surge':
-        print("Market is promising today!")
+        logger.info("Market is promising today!")
     elif ticker_performance == 'neutral':
-        print("It's a steady day")
+        logger.info("It's a steady day")
     else:
-        print("No coditional is met, there's an uncatched condition")
-if __name__ == "__main__":
-    main()
+        logger.info("No coditional is met, there's an uncatched condition")
+
