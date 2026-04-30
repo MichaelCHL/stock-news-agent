@@ -39,6 +39,7 @@ async def search(ticker):
     
     except Exception as e:
         logger.error(f"Failed to retreive the latest news related to {ticker} on {today_dt}")
+        logger.error(e)
 
 if __name__ == '__main__':
     search('NVDA')
