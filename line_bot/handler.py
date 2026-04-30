@@ -46,6 +46,8 @@ async def handle_callback(request: Request):
         ticker_symbol = user_input.upper()
         
         result = await orchestrator(ticker_symbol)
+        if not result:
+            result = "Sorry, I couldn't retrieve news for {ticker_symbol}. Please try again."
         await line_bot_api.reply_message(
             ReplyMessageRequest(
                 reply_token=event.reply_token,
