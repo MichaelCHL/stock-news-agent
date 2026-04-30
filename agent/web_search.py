@@ -18,7 +18,9 @@ async def search(ticker):
             messages=[
                 {
                     "role": "user",
-                    "content": f"Search for the top 3 news stories about {ticker} on {today_dt} that explain why the stock price moved significantly today. Be concise and specific",
+                    "content": f"Search for the top 3 news stories about {ticker} on {today_dt} that explain why the stock price moved significantly today. \
+                                Be concise and specific that can be read easily by user via social networking app like Line and WhatsApp. \
+                                Avoid any markdown formatting.",
                 }
             ],
             tools=[{"type": "web_search_20260209", 
