@@ -3,8 +3,6 @@ from price.price_move_sig import price_move
 from agent.web_search import search
 from utils.logger import get_logger
 
-import anthropic
-
 logger = get_logger(__name__)
 
 async def orchestrator(ticker: str):
@@ -18,10 +16,9 @@ async def orchestrator(ticker: str):
     ticker_performance = price_move(ticker_pc, spy_pc)
     if ticker_performance in ["market_wide_drop", "underperform", "underperform_mild", "outperform_mild", "outperform"]:
         try:
-            news = search(ticker.upper())
+            news = await search(ticker.upper())
             return news
-        except anthropic.APIConnectionError as e:
-            print("API Connection Failed!")
+        except Exception as e:
             logger.error(e)
             return
         

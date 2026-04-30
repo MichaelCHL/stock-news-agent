@@ -1,18 +1,18 @@
 import anthropic
 from utils.logger import get_logger
 from datetime import datetime
-from config import MODEL, MAX_TOKENS, ANTHROPIC_API_KEY
+from config import MODEL, MAX_TOKENS
 
 logger =  get_logger(__name__)
 
-def search(ticker):
+async def search(ticker):
     today_dt = datetime.now().strftime("%Y-%m-%d")
 
     try:
         logger.info("Initiating a client...")
-        client = anthropic.Anthropic()
+        client = anthropic.AsyncAnthropic()
 
-        response = client.messages.create(
+        response = await client.messages.create(
             model=MODEL,
             max_tokens=MAX_TOKENS,
             messages=[
@@ -37,9 +37,8 @@ def search(ticker):
         logger.info("Result retrieved successfully!")
         return result
     
-    except anthropic.APIConnectionError as e:
+    except Exception as e:
         logger.error(f"Failed to retreive the latest news related to {ticker} on {today_dt}")
-        print("The server could not be reached - ", e)
 
 if __name__ == '__main__':
     search('NVDA')

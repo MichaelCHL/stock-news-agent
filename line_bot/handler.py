@@ -6,7 +6,6 @@ from linebot.v3.webhook import WebhookParser
 from orchestrator import orchestrator
 from price.ticker_search import ticker_search
 from config import LINE_CHANNEL_SECRET, LINE_CHANNEL_ACCESS_TOKEN
-import asyncio
 
 config = Configuration(access_token=LINE_CHANNEL_ACCESS_TOKEN)
 
@@ -46,7 +45,7 @@ async def handle_callback(request: Request):
 
         ticker_symbol = user_input.upper()
         
-        result = await asyncio.to_thread(orchestrator, ticker_symbol)
+        result = await orchestrator(ticker_symbol)
         await line_bot_api.reply_message(
             ReplyMessageRequest(
                 reply_token=event.reply_token,
