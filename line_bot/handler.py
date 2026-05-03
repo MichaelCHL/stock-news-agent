@@ -6,9 +6,11 @@ from linebot.v3.webhook import WebhookParser
 from orchestrator import orchestrator
 from price.ticker_search import ticker_search
 from config import LINE_CHANNEL_SECRET, LINE_CHANNEL_ACCESS_TOKEN
+from utils import logger
 
 config = Configuration(access_token=LINE_CHANNEL_ACCESS_TOKEN)
 
+logging = logger.get_logger(__name__)
 app = FastAPI()
 async_api_client = AsyncApiClient(config)
 line_bot_api = AsyncMessagingApi(async_api_client)
@@ -24,6 +26,7 @@ async def handle_callback(request: Request):
 
     try:
         events = parser.parse(body, signature)
+        logger.info(event)
     except InvalidSignatureError:
         raise HTTPException(status_code=400, detail="Invalid signature")
     
