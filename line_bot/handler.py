@@ -6,7 +6,7 @@ from linebot.v3.webhook import WebhookParser
 from orchestrator import orchestrator
 from price.ticker_search import ticker_search
 from config import LINE_CHANNEL_SECRET, LINE_CHANNEL_ACCESS_TOKEN
-from utils import logger
+from utils.logger import get_logger
 
 config = Configuration(access_token=LINE_CHANNEL_ACCESS_TOKEN)
 
