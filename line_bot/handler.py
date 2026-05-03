@@ -26,7 +26,7 @@ async def handle_callback(request: Request):
 
     try:
         events = parser.parse(body, signature)
-        logger.info(event)
+        logger.info(events)
     except InvalidSignatureError:
         raise HTTPException(status_code=400, detail="Invalid signature")
     
