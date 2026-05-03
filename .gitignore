@@ -10,3 +10,5 @@ wheels/
 *.log
 # Virtual environments
 .venv
+
+notebook/
