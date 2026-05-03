@@ -10,7 +10,7 @@ from utils.logger import get_logger
 
 config = Configuration(access_token=LINE_CHANNEL_ACCESS_TOKEN)
 
-logging = logger.get_logger(__name__)
+logger = get_logger(__name__)
 app = FastAPI()
 async_api_client = AsyncApiClient(config)
 line_bot_api = AsyncMessagingApi(async_api_client)
