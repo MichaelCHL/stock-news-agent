@@ -42,7 +42,7 @@ async def handle_callback(request: Request):
         current_time = time.time()
         user_id = event.source.user_id
         active_users[user_id].append(current_time)
-        # rate limit: 2 times allowance with in 60 seconds window 
+        # rate limit: 2 times allowance within 60 seconds window 
         while active_users[user_id] and current_time - active_users[user_id][0] > 60:
             active_users[user_id].pop(0)
         if len(active_users[user_id]) > 2:
