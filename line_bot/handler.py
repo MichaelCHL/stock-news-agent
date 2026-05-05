@@ -49,7 +49,7 @@ async def handle_callback(request: Request):
             await line_bot_api.reply_message(
                 ReplyMessageRequest(
                     reply_token=event.reply_token,
-                    messages=[TextMessage(text="You've hit the rate limit (5 requests per 60 seconds). Please try again later.")]
+                    messages=[TextMessage(text="You've hit the rate limit (2 requests per 60 seconds). Please try again later.")]
                 )
             )
             continue
