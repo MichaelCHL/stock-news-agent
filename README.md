@@ -65,7 +65,7 @@ project-root/
 |   ├── price_move_sig.py # Stock movement checker
 |   └── ticker_search.py # ticker searcher & converter
 ├── utils
-|   └── logger.py
+|   └── logger.py # logger settings
 ├── app.py
 ├── config.py
 ├── orchestrator.py
