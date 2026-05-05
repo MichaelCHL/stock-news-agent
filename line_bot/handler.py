@@ -7,6 +7,9 @@ from orchestrator import orchestrator
 from price.ticker_search import ticker_search
 from config import LINE_CHANNEL_SECRET, LINE_CHANNEL_ACCESS_TOKEN
 from utils.logger import get_logger
+from collections import defaultdict
+
+import time
 
 config = Configuration(access_token=LINE_CHANNEL_ACCESS_TOKEN)
 
@@ -15,6 +18,7 @@ app = FastAPI()
 async_api_client = AsyncApiClient(config)
 line_bot_api = AsyncMessagingApi(async_api_client)
 parser = WebhookParser(LINE_CHANNEL_SECRET)
+active_users = defaultdict(list)
 
 @app.post("/callback")
 async def handle_callback(request: Request):
@@ -35,7 +39,21 @@ async def handle_callback(request: Request):
             continue
         if not isinstance(event.message, TextMessageContent):
             continue
-        
+        current_time = time.time()
+        user_id = event.source.user_id
+        active_users[user_id].append(current_time)
+        # rate limit: 2 times allowance with in 60 seconds window 
+        while active_users[user_id] and current_time - active_users[user_id][0] > 60:
+            active_users[user_id].pop(0)
+        if len(active_users[user_id]) > 2:
+            await line_bot_api.reply_message(
+                ReplyMessageRequest(
+                    reply_token=event.reply_token,
+                    messages=[TextMessage(text="You've hit the rate limit (5 requests per 60 seconds). Please try again later.")]
+                )
+            )
+            continue
+
         user_input = ticker_search(event.message.text)
         if not user_input:
             await line_bot_api.reply_message(
