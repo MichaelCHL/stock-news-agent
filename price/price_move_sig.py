@@ -1,13 +1,17 @@
 from config import NEG_PERCENT_THRESHOLD, POS_PERCENT_THRESHOLD
 def price_move(symbol_pc, spy_pc):
 
-    if symbol_pc > spy_pc and symbol_pc > POS_PERCENT_THRESHOLD:
+    if spy_pc < 0 and symbol_pc > POS_PERCENT_THRESHOLD:
+        return "outperform_wild"
+    elif POS_PERCENT_THRESHOLD > spy_pc > 0 and symbol_pc > POS_PERCENT_THRESHOLD:
         return "outperform"
     elif spy_pc < NEG_PERCENT_THRESHOLD:
-        return "market_wide_drop"
-    elif spy_pc > POS_PERCENT_THRESHOLD:
+        return "market_wild_drop"
+    elif spy_pc > POS_PERCENT_THRESHOLD and symbol_pc > POS_PERCENT_THRESHOLD:
         return "market_surge"
-    elif (symbol_pc < spy_pc and spy_pc > 0):
+    elif spy_pc > POS_PERCENT_THRESHOLD and symbol_pc < NEG_PERCENT_THRESHOLD:
+        return "underperform_wild"
+    elif (symbol_pc < spy_pc and spy_pc >= 0):
         return "underperform"
     elif symbol_pc < 0 and spy_pc < 0 and spy_pc > symbol_pc:
         return "underperform_mild"
