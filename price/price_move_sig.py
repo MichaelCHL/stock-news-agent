@@ -3,7 +3,7 @@ def price_move(symbol_pc, spy_pc):
 
     if spy_pc < 0 and symbol_pc > POS_PERCENT_THRESHOLD:
         return "outperform_wild"
-    elif POS_PERCENT_THRESHOLD > spy_pc > 0 and symbol_pc > POS_PERCENT_THRESHOLD:
+    elif POS_PERCENT_THRESHOLD > spy_pc >= 0 and symbol_pc > POS_PERCENT_THRESHOLD:
         return "outperform"
     elif spy_pc < NEG_PERCENT_THRESHOLD:
         return "market_wild_drop"
