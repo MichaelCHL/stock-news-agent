@@ -14,7 +14,7 @@ async def orchestrator(ticker: str):
     spy_pc = today_price.get("SPY").get("percent_change")
     ticker_pc = today_price.get(f"{ticker}").get("percent_change")
     ticker_performance = price_move(ticker_pc, spy_pc)
-    if ticker_performance in ["market_wide_drop", "underperform", "underperform_mild", "outperform_mild", "outperform"]:
+    if ticker_performance in ["market_wile_drop", "underperform", "underperform_mild", "outperform_mild", "outperform", "outperform_wild", "underperform_wild"]:
         try:
             news = await search(ticker.upper())
             return news
