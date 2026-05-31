@@ -7,6 +7,7 @@ from orchestrator import orchestrator
 from price.ticker_search import ticker_search
 from config import LINE_CHANNEL_SECRET, LINE_CHANNEL_ACCESS_TOKEN
 from utils.logger import get_logger
+from utils.rate_limiter import rate_limit
 from collections import defaultdict
 
 import time
@@ -41,11 +42,7 @@ async def handle_callback(request: Request):
             continue
         current_time = time.time()
         user_id = event.source.user_id
-        active_users[user_id].append(current_time)
-        # rate limit: 2 times allowance within 60 seconds window 
-        while active_users[user_id] and current_time - active_users[user_id][0] > 60:
-            active_users[user_id].pop(0)
-        if len(active_users[user_id]) > 2:
+        if rate_limit(user_id, active_users, current_time):
             await line_bot_api.reply_message(
                 ReplyMessageRequest(
                     reply_token=event.reply_token,

@@ -27,3 +27,7 @@ if not LINE_CHANNEL_SECRET:
 if not LINE_CHANNEL_ACCESS_TOKEN:
     print("Specify LINE_CHANNEL_ACCESS_TOKEN as environment variable.")
     sys.exit(1)
+
+# rate_limiter.py - rate limit
+RATE_LIMIT = 2
+TIME_THRESHOLD = 60
