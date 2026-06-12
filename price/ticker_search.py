@@ -9,7 +9,7 @@ def ticker_search(name: str):
     if any('\u4e00' <= char <= '\u9fff' for char in name):
         results = finnhub_client.symbol_lookup(name).get("result")
         for result in results:
-            if '.' not in result.get("symbol"):
+            if '.' in result.get("symbol"):
                 return result.get("symbol")
         return None
     elif ' ' not in name and name.isupper():
