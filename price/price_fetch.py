@@ -28,4 +28,7 @@ async def get_real_time_price(symbol: str) -> Optional[Dict[str, Dict[str,float]
     except httpx.HTTPStatusError as e:
         logger.exception(f"HTTP Status error: {e}") 
         return None      
+    except KeyError as e:
+        logger.exception(f"Missing expected key in API response {e}")
+        return None
 
